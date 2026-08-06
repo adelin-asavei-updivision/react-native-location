@@ -36,6 +36,14 @@
         _locationBackground = NO;
         _locationNotificationMandatory = NO;
         [RNLocationUtils setName:[[self class] moduleName]];
+        [RNLocationUtils setEmitters:
+            ^(NSArray<id<NSObject>> *value) {
+                [self emitOnChange:value];
+            }
+            onError:^(NSDictionary *value) {
+                [self emitOnError:value];
+            }
+        ];
         [RNLocationForeground setCenter];
     }
     return self;
@@ -49,11 +57,6 @@
     [RNLocationManager reset];
     [RNLocationUtils reset];
     [RNLocationForeground reset];
-}
-
-- (void)setEventEmitterCallback:(EventEmitterCallbackWrapper *)eventEmitterCallbackWrapper {
-    [super setEventEmitterCallback:eventEmitterCallbackWrapper];
-    [RNLocationUtils setEventEmitter:_eventEmitterCallback];
 }
 
 - (void)getCurrent:(nonnull NSDictionary *)options

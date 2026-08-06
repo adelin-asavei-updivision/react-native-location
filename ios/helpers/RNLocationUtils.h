@@ -1,16 +1,20 @@
 #import <Foundation/Foundation.h>
 
 #import <React/RCTBridgeModule.h>
-#import <ReactCommon/RCTTurboModule.h>
 
 #import <CoreLocation/CoreLocation.h>
+
+typedef void (^RNLocationChangeEmitter)(NSArray * _Nonnull value);
+typedef void (^RNLocationErrorEmitter)(NSDictionary * _Nonnull value);
 
 @interface RNLocationUtils : NSObject
 
 @property(class, nonatomic, strong, nonnull) NSString *name;
-@property(class, nonatomic, assign, nullable) facebook::react::EventEmitterCallback eventEmitter;
 
-+ (void)emitChange:(nullable NSObject *)body;
++ (void)setEmitters:(RNLocationChangeEmitter _Nonnull)_onChangeEmitter
+           onError:(RNLocationErrorEmitter _Nonnull)_onErrorEmitter;
+
++ (void)emitChange:(NSArray *_Nonnull)body;
 + (void)emitError:(NSString *_Nonnull)code message:(NSString *_Nonnull)message critical:(BOOL)critical;
 + (void)emitError:(NSString *_Nonnull)code message:(NSString *_Nonnull)message;
 
