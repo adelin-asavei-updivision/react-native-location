@@ -6,41 +6,46 @@ import android.os.Build;
 import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.CxxCallbackImpl;
 import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 
-import static com.hyoper.location.helpers.RNLocationConstants.Event;
 import static com.hyoper.location.helpers.RNLocationConstants.Error;
 import static com.hyoper.location.helpers.RNLocationConstants.ErrorMessage;
 
+import java.util.function.Consumer;
+
 public class RNLocationUtils {
     public static String name = "RNLocation";
-    public static CxxCallbackImpl eventEmitter = null;
+    private static Consumer<ReadableArray> onChange = null;
+    private static Consumer<ReadableMap> onError = null;
+
 
     public static void setName(String _name) {
         name = _name;
     }
 
-    public static void setEmitter(@Nullable CxxCallbackImpl _eventEmitter) {
-        eventEmitter = _eventEmitter;
+    public static void setEmitter(Consumer<ReadableArray> _onChange, Consumer<ReadableMap> _onError) {
+        onChange = _onChange;
+        onError = _onError;
     }
 
-    public static void emitChange(@Nullable Object body) {
-        if (eventEmitter == null) return;
+    public static void emitChange(ReadableArray body) {
+        if (onChange == null) return;
 
-        eventEmitter.invoke(Event.ON_CHANGE, body);
+        onChange.accept(body);
     }
 
     public static void emitError(String code, String message, boolean critical) {
-        if (eventEmitter == null) return;
+        if (onError == null) return;
 
         WritableMap map = Arguments.createMap();
         map.putString("code", code);
         map.putString("message", message);
         map.putBoolean("critical", critical);
 
-        eventEmitter.invoke(Event.ON_ERROR, map);
+        onError.accept(map);
     }
 
     public static void emitError(String code, String message) {
@@ -96,6 +101,7 @@ public class RNLocationUtils {
 
     public static void reset() {
         name = "RNLocation";
-        eventEmitter = null;
+        onChange = null;
+        onError = null;
     }
 }
