@@ -3,8 +3,8 @@
 #import "RNLocationException.h"
 
 static NSString *name = @"RNLocation";
-static RNLocationChangeEmitter onChangeEmitter = nil;
-static RNLocationErrorEmitter onErrorEmitter = nil;
+static ChangeEmitter onChangeEmitter = nil;
+static ErrorEmitter onErrorEmitter = nil;
 
 @implementation RNLocationUtils
 
@@ -16,7 +16,7 @@ static RNLocationErrorEmitter onErrorEmitter = nil;
     name = _name;
 }
 
-+ (void)setEmitters:(RNLocationChangeEmitter)_onChangeEmitter onError:(RNLocationErrorEmitter)_onErrorEmitter {
++ (void)setEmitters:(ChangeEmitter)_onChangeEmitter onError:(ErrorEmitter)_onErrorEmitter {
     onChangeEmitter = [_onChangeEmitter copy];
     onErrorEmitter = [_onErrorEmitter copy];
 }

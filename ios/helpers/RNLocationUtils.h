@@ -4,15 +4,15 @@
 
 #import <CoreLocation/CoreLocation.h>
 
-typedef void (^RNLocationChangeEmitter)(NSArray * _Nonnull value);
-typedef void (^RNLocationErrorEmitter)(NSDictionary * _Nonnull value);
+typedef void (^ChangeEmitter)(NSArray * _Nonnull value);
+typedef void (^ErrorEmitter)(NSDictionary * _Nonnull value);
 
 @interface RNLocationUtils : NSObject
 
 @property(class, nonatomic, strong, nonnull) NSString *name;
 
-+ (void)setEmitters:(RNLocationChangeEmitter _Nonnull)_onChangeEmitter
-           onError:(RNLocationErrorEmitter _Nonnull)_onErrorEmitter;
++ (void)setEmitters:(ChangeEmitter _Nonnull)_onChangeEmitter
+           onError:(ErrorEmitter _Nonnull)_onErrorEmitter;
 
 + (void)emitChange:(NSArray *_Nonnull)body;
 + (void)emitError:(NSString *_Nonnull)code message:(NSString *_Nonnull)message critical:(BOOL)critical;

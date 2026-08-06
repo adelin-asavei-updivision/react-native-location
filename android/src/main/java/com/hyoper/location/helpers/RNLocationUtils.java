@@ -15,23 +15,23 @@ import static com.hyoper.location.helpers.RNLocationConstants.Error;
 import static com.hyoper.location.helpers.RNLocationConstants.ErrorMessage;
 
 public class RNLocationUtils {
-    public interface RNLocationChangeEmitter {
+    public interface ChangeEmitter {
         void emit(ReadableArray value);
     }
 
-    public interface RNLocationErrorEmitter {
+    public interface ErrorEmitter {
         void emit(ReadableMap value);
     }
 
     public static String name = "RNLocation";
-    private static RNLocationChangeEmitter onChangeEmitter = null;
-    private static RNLocationErrorEmitter onErrorEmitter = null;
+    private static ChangeEmitter onChangeEmitter = null;
+    private static ErrorEmitter onErrorEmitter = null;
 
     public static void setName(String _name) {
         name = _name;
     }
 
-    public static void setEmitters(RNLocationChangeEmitter _onChangeEmitter, RNLocationErrorEmitter _onErrorEmitter) {
+    public static void setEmitters(ChangeEmitter _onChangeEmitter, ErrorEmitter _onErrorEmitter) {
         onChangeEmitter = _onChangeEmitter;
         onErrorEmitter = _onErrorEmitter;
     }
