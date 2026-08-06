@@ -28,7 +28,7 @@ On Android, the foreground service includes a notification. This notification pr
 <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 ```
 
-On Android, location services are run through the ForegroundService while the app is in the background. This service must be defined in AndroidManifest.xml. **[See Lines](https://github.com/HyopeR/react-native-location/blob/master/example/android/app/src/main/AndroidManifest.xml#L28-L32)**
+On Android, location services are run through the ForegroundService while the app is in the background. This service must be defined in AndroidManifest.xml. **[See Lines](https://github.com/HyopeR/react-native-location/blob/master/example/android/app/src/main/AndroidManifest.xml#L30-L33)**
 ```xml
 <service 
     android:name="com.hyoper.location.RNLocationForeground"
@@ -42,7 +42,7 @@ IOS requires permission declarations and modes in Info.plist.
 ### Ios Foreground Setup
 **Required**<br/>
 The instructions in this section are mandatory.<br/>
-To use location services on IOS, **NSLocationWhenInUseUsageDescription** permission must be added to the Info.plist. **[See Lines](https://github.com/HyopeR/react-native-location/blob/master/example/ios/ExampleApp/Info.plist#L34-L35)**
+To use location services on IOS, **NSLocationWhenInUseUsageDescription** permission must be added to the Info.plist. **[See Lines](https://github.com/HyopeR/react-native-location/blob/master/example/ios/ExampleApp/Info.plist#L36-L37)**
 ```xml
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>Location access when the app is in the foreground.</string>
@@ -51,7 +51,7 @@ To use location services on IOS, **NSLocationWhenInUseUsageDescription** permiss
 ### Ios Background Setup
 **Optional**<br/>
 The instructions in this section are optional.<br/>
-To use location services in the background on IOS, **NSLocationAlwaysAndWhenInUseUsageDescription** permission must be added to the Info.plist. **[See Lines](https://github.com/HyopeR/react-native-location/blob/master/example/ios/ExampleApp/Info.plist#L36-L37)**
+To use location services in the background on IOS, **NSLocationAlwaysAndWhenInUseUsageDescription** permission must be added to the Info.plist. **[See Lines](https://github.com/HyopeR/react-native-location/blob/master/example/ios/ExampleApp/Info.plist#L38-L39)**
 ```xml
 <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 <string>Location access when the app is in the foreground and background.</string>
@@ -59,7 +59,7 @@ To use location services in the background on IOS, **NSLocationAlwaysAndWhenInUs
 
 On IOS, you can set the notification behavior with "notificationMandatory" when using location in the background, but no setup is required.<br/>
 
-On IOS, if location services are to be used while the app is running in the background, this behavior must be defined as background modes in Info.plist. **[See Lines](https://github.com/HyopeR/react-native-location/blob/master/example/ios/ExampleApp/Info.plist#L38-L41)**
+On IOS, if location services are to be used while the app is running in the background, this behavior must be defined as background modes in Info.plist. **[See Lines](https://github.com/HyopeR/react-native-location/blob/master/example/ios/ExampleApp/Info.plist#L40-L43)**
 ```xml
 <key>UIBackgroundModes</key>
 <array>
