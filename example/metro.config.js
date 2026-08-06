@@ -12,7 +12,7 @@ const libraryNodeModules = path.join(libraryRoot, 'node_modules');
 
 const modulesPeer = Object.keys({...pack.peerDependencies});
 const modulesBlackList = modulesPeer.map(m => {
-  return new RegExp(`${escape(path.join(libraryNodeModules, m))}[\\\\/]`);
+  return new RegExp(`^${escape(path.join(libraryNodeModules, m))}[\\\\/]`);
 });
 const modules = modulesPeer.reduce(
   (prev, current) => {
@@ -33,11 +33,7 @@ const config = {
   projectRoot: exampleRoot,
   watchFolders: [libraryRoot],
   resolver: {
-    ...configDefault.resolver,
-    blockList: [
-      ...(configDefault.resolver.blockList || []),
-      ...modulesBlackList,
-    ],
+    blockList: modulesBlackList,
     extraNodeModules: modules,
   },
 };
