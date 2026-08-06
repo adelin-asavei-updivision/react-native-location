@@ -39,7 +39,7 @@ public class RNLocation extends NativeRNLocationSpec {
         reactContext.addActivityEventListener(permission);
         reactContext.addActivityEventListener(manager);
         RNLocationUtils.setName(NAME);
-        RNLocationUtils.setEmitter(this::emitOnChange, this::emitOnError);
+        RNLocationUtils.setEmitters(this::emitOnChange, this::emitOnError);
         RNLocationForeground.setProvider(provider);
     }
 

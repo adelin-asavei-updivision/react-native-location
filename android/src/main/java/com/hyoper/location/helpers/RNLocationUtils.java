@@ -14,38 +14,43 @@ import com.facebook.react.bridge.WritableMap;
 import static com.hyoper.location.helpers.RNLocationConstants.Error;
 import static com.hyoper.location.helpers.RNLocationConstants.ErrorMessage;
 
-import java.util.function.Consumer;
-
 public class RNLocationUtils {
-    public static String name = "RNLocation";
-    private static Consumer<ReadableArray> onChange = null;
-    private static Consumer<ReadableMap> onError = null;
+    public interface RNLocationChangeEmitter {
+        void emit(ReadableArray value);
+    }
 
+    public interface RNLocationErrorEmitter {
+        void emit(ReadableMap value);
+    }
+
+    public static String name = "RNLocation";
+    private static RNLocationChangeEmitter onChangeEmitter = null;
+    private static RNLocationErrorEmitter onErrorEmitter = null;
 
     public static void setName(String _name) {
         name = _name;
     }
 
-    public static void setEmitter(Consumer<ReadableArray> _onChange, Consumer<ReadableMap> _onError) {
-        onChange = _onChange;
-        onError = _onError;
+    public static void setEmitters(RNLocationChangeEmitter _onChangeEmitter, RNLocationErrorEmitter _onErrorEmitter) {
+        onChangeEmitter = _onChangeEmitter;
+        onErrorEmitter = _onErrorEmitter;
     }
 
     public static void emitChange(ReadableArray body) {
-        if (onChange == null) return;
+        if (onChangeEmitter == null) return;
 
-        onChange.accept(body);
+        onChangeEmitter.emit(body);
     }
 
     public static void emitError(String code, String message, boolean critical) {
-        if (onError == null) return;
+        if (onErrorEmitter == null) return;
 
         WritableMap map = Arguments.createMap();
         map.putString("code", code);
         map.putString("message", message);
         map.putBoolean("critical", critical);
 
-        onError.accept(map);
+        onErrorEmitter.emit(map);
     }
 
     public static void emitError(String code, String message) {
@@ -101,7 +106,7 @@ public class RNLocationUtils {
 
     public static void reset() {
         name = "RNLocation";
-        onChange = null;
-        onError = null;
+        onChangeEmitter = null;
+        onErrorEmitter = null;
     }
 }
