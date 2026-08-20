@@ -20,7 +20,7 @@ static BOOL centerWorking = NO;
 
 + (void)setCenter {
     center = [UNUserNotificationCenter currentNotificationCenter];
-    center.delegate = (id<UNUserNotificationCenterDelegate>)self;
+    // center.delegate = (id<UNUserNotificationCenterDelegate>)self;
 }
 
 + (void)setNotification:(NSDictionary *)map {
@@ -66,7 +66,7 @@ static BOOL centerWorking = NO;
 }
 
 + (void)reset {
-    center.delegate = nil;
+    // center.delegate = nil;
     center = nil;
     centerWorking = NO;
 }
