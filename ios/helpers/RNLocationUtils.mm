@@ -3,7 +3,8 @@
 #import "RNLocationException.h"
 
 static NSString *name = @"RNLocation";
-static facebook::react::EventEmitterCallback eventEmitter = nullptr;
+static ChangeEmitter onChangeEmitter = nil;
+static ErrorEmitter onErrorEmitter = nil;
 
 @implementation RNLocationUtils
 
@@ -15,29 +16,26 @@ static facebook::react::EventEmitterCallback eventEmitter = nullptr;
     name = _name;
 }
 
-+ (facebook::react::EventEmitterCallback)eventEmitter {
-    return eventEmitter;
++ (void)setEmitters:(ChangeEmitter)_onChangeEmitter onError:(ErrorEmitter)_onErrorEmitter {
+    onChangeEmitter = [_onChangeEmitter copy];
+    onErrorEmitter = [_onErrorEmitter copy];
 }
 
-+ (void)setEventEmitter:(facebook::react::EventEmitterCallback)_eventEmitter {
-    eventEmitter = _eventEmitter;
-}
++ (void)emitChange:(NSArray *)body {
+    if (!onChangeEmitter) return;
 
-+ (void)emitChange:(nullable NSObject *)body {
-    if (!eventEmitter) return;
-
-    eventEmitter([RNLocationEvent.ON_CHANGE UTF8String], body);
+    onChangeEmitter(body);
 }
 
 + (void)emitError:(NSString *)code message:(NSString *)message critical:(BOOL)critical {
-    if (!eventEmitter) return;
+    if (!onErrorEmitter) return;
 
     NSMutableDictionary *map = [NSMutableDictionary dictionary];
     map[@"code"] = code;
     map[@"message"] = message;
     map[@"critical"] = @(critical);
 
-    eventEmitter([RNLocationEvent.ON_ERROR UTF8String], map);
+    onErrorEmitter(map);
 }
 
 + (void)emitError:(NSString *)code message:(NSString *)message {
@@ -80,7 +78,8 @@ static facebook::react::EventEmitterCallback eventEmitter = nullptr;
 
 + (void)reset {
     name = @"RNLocation";
-    eventEmitter = nullptr;
+    onChangeEmitter = nil;
+    onErrorEmitter = nil;
 }
 
 @end
